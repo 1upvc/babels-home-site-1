@@ -7,6 +7,36 @@
 const path = require('path')
 const fs = require('fs')
 
+// Freshness window: curated items older than this drop off listings + feeds.
+// Keep in sync with gatsby-config.js FRESH_CUTOFF and scripts MAX_AGE_DAYS.
+const FRESHNESS_DAYS = 14
+const freshCutoffISO = () =>
+  new Date(Date.now() - FRESHNESS_DAYS * 864e5).toISOString()
+
+// Declare article frontmatter fields explicitly so that optional fields
+// (notably `draft`/`relevance`) are always queryable/filterable/sortable
+// even when no file sets them.
+exports.createSchemaCustomization = ({ actions }) => {
+  actions.createTypes(`
+    type Mdx implements Node {
+      frontmatter: MdxFrontmatter
+    }
+    type MdxFrontmatter {
+      title: String
+      slug: String
+      date: Date @dateformat
+      type: String
+      sourceUrl: String
+      sourceName: String
+      tags: [String]
+      keywords: [String]
+      value: String
+      draft: Boolean
+      relevance: Int
+    }
+  `)
+}
+
 // Add a `fields.slug` to every MDX article node.
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
@@ -29,6 +59,9 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
+  // Draft articles are built in development (for preview) but skipped in production.
+  const includeDrafts = process.env.NODE_ENV === 'development'
+
   const result = await graphql(`
     {
       allMdx(sort: { frontmatter: { date: DESC } }) {
@@ -36,6 +69,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           id
           fields {
             slug
+          }
+          frontmatter {
+            draft
           }
           internal {
             contentFilePath
@@ -53,12 +89,23 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const articleTemplate = path.resolve(`src/templates/article.js`)
 
   result.data.allMdx.nodes.forEach((node) => {
+    if (node.frontmatter.draft && !includeDrafts) return
+
     createPage({
       path: `/articles/${node.fields.slug}`,
       // The MDX content-file path is appended so the compiled body renders as `children`.
       component: `${articleTemplate}?__contentFilePath=${node.internal.contentFilePath}`,
       context: { id: node.id },
     })
+  })
+
+  // The /articles index. Created here (not as a file-system page) so the
+  // freshness cutoff can be baked in as a build-time query variable.
+  // In development, use the epoch so every date previews.
+  createPage({
+    path: `/articles`,
+    component: path.resolve(`src/templates/articles-index.js`),
+    context: { cutoff: includeDrafts ? new Date(0).toISOString() : freshCutoffISO() },
   })
 }
 
@@ -73,7 +120,10 @@ exports.onPostBuild = async ({ graphql, reporter }) => {
           siteUrl
         }
       }
-      allMdx(sort: { frontmatter: { date: DESC } }) {
+      allMdx(
+        sort: { frontmatter: { date: DESC } }
+        filter: { frontmatter: { draft: { ne: true } } }
+      ) {
         nodes {
           fields {
             slug
@@ -81,6 +131,7 @@ exports.onPostBuild = async ({ graphql, reporter }) => {
           frontmatter {
             title
             date
+            type
             value
             tags
             sourceUrl
@@ -99,13 +150,21 @@ exports.onPostBuild = async ({ graphql, reporter }) => {
   const { site, allMdx } = result.data
   const siteUrl = site.siteMetadata.siteUrl
 
+  // Freshness: curated items age out of the feed after the window; originals stay.
+  const cutoff = new Date(freshCutoffISO())
+  const fresh = allMdx.nodes.filter(
+    (n) =>
+      n.frontmatter.type === 'original' ||
+      new Date(n.frontmatter.date) >= cutoff
+  )
+
   const feed = {
     version: 'https://jsonfeed.org/version/1.1',
     title: site.siteMetadata.title,
     home_page_url: `${siteUrl}/articles`,
     feed_url: `${siteUrl}/feed.json`,
     description: site.siteMetadata.description,
-    items: allMdx.nodes.map((node) => {
+    items: fresh.map((node) => {
       const url = `${siteUrl}/articles/${node.fields.slug}`
       return {
         id: url,

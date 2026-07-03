@@ -1,3 +1,7 @@
+// Freshness window for the RSS feed: curated items older than this drop off.
+// Keep in sync with gatsby-node.js FRESHNESS_DAYS and scripts MAX_AGE_DAYS.
+const FRESH_CUTOFF = new Date(Date.now() - 14 * 864e5).toISOString()
+
 module.exports = {
   siteMetadata: {
     title: "Babels",
@@ -100,26 +104,38 @@ module.exports = {
         feeds: [
           {
             serialize: ({ query: { site, allMdx } }) => {
-              return allMdx.nodes.map((node) => {
-                const url = `${site.siteMetadata.siteUrl}/articles/${node.fields.slug}`
-                return {
-                  title: node.frontmatter.title,
-                  description: node.frontmatter.value,
-                  date: node.frontmatter.date,
-                  url,
-                  guid: url,
-                }
-              })
+              const cutoff = new Date(FRESH_CUTOFF)
+              return allMdx.nodes
+                // Curated items age out after the window; originals never expire.
+                .filter(
+                  (node) =>
+                    node.frontmatter.type === 'original' ||
+                    new Date(node.frontmatter.date) >= cutoff
+                )
+                .map((node) => {
+                  const url = `${site.siteMetadata.siteUrl}/articles/${node.fields.slug}`
+                  return {
+                    title: node.frontmatter.title,
+                    description: node.frontmatter.value,
+                    date: node.frontmatter.date,
+                    url,
+                    guid: url,
+                  }
+                })
             },
             query: `
               {
-                allMdx(sort: { frontmatter: { date: DESC } }) {
+                allMdx(
+                  sort: { frontmatter: { date: DESC } }
+                  filter: { frontmatter: { draft: { ne: true } } }
+                ) {
                   nodes {
                     fields { slug }
                     frontmatter {
                       title
                       value
                       date
+                      type
                     }
                   }
                 }
