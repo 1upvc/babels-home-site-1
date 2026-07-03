@@ -1,0 +1,15 @@
+---
+title: "Inside Elastic InfoSec's agentic SOC: cutting alert triage from 30 minutes to under 3"
+slug: inside-elastic-infosec-s-agentic-soc-cutting-alert-triage
+date: 2026-07-02
+type: curated
+draft: false
+sourceUrl: https://www.elastic.co/security-labs/alert-triage-agentic-soc-elastic-workflows
+sourceName: "Elastic Security Labs"
+tags: [detection-engineering, siem]
+keywords: [esql, workflow, agentic soc, alert triage, elasticsearch]
+value: "Offload routine triage to code so analysts only touch high-signal, non-deterministic investigations."
+relevance: 4
+---
+
+The pipeline resolves known false positives with deterministic ES|QL queries before escalating ambiguous cases to specialized LLM agents. Orchestration lives in Elastic Workflows rather than an agent layer for cost-effective scale and auditability across thousands of monthly alerts.
