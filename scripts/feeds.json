@@ -1,0 +1,8 @@
+[
+  { "name": "The DFIR Report", "url": "https://thedfirreport.com/feed/" },
+  { "name": "Red Canary", "url": "https://redcanary.com/blog/feed/" },
+  { "name": "Elastic Security Labs", "url": "https://www.elastic.co/security-labs/rss/feed.xml" },
+  { "name": "Krebs on Security", "url": "https://krebsonsecurity.com/feed/" },
+  { "name": "Google Cloud — Security & Identity", "url": "https://cloudblog.withgoogle.com/products/identity-security/rss/" },
+  { "name": "Google Cloud — Threat Intelligence", "url": "https://cloudblog.withgoogle.com/topics/threat-intelligence/rss/" }
+]

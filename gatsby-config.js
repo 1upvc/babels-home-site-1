@@ -1,8 +1,12 @@
+// Freshness window for the RSS feed: curated items older than this drop off.
+// Keep in sync with gatsby-node.js FRESHNESS_DAYS and scripts MAX_AGE_DAYS.
+const FRESH_CUTOFF = new Date(Date.now() - 14 * 864e5).toISOString()
+
 module.exports = {
   siteMetadata: {
     title: "Babels",
     author: "Arjun G. Raman",
-    siteUrl: "https://cairnz.com",
+    siteUrl: "https://babels.dev",
     siteImage: "/assets/bg-austin.jpg",
     description: "AI Detection Engineering Solutions and News for Cyber Defense Practitioners"
   },
@@ -15,6 +19,14 @@ module.exports = {
         name: `assets`,
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/content/articles/`,
+        name: `articles`,
+      },
+    },
+    `gatsby-plugin-mdx`,
     {
       resolve: `gatsby-plugin-sharp`,
       options: {
@@ -74,6 +86,68 @@ module.exports = {
     },
     'gatsby-plugin-sass',
     'gatsby-plugin-offline',
-    `gatsby-plugin-sitemap`
+    `gatsby-plugin-sitemap`,
+    {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        query: `
+          {
+            site {
+              siteMetadata {
+                title
+                description
+                siteUrl
+              }
+            }
+          }
+        `,
+        feeds: [
+          {
+            serialize: ({ query: { site, allMdx } }) => {
+              const cutoff = new Date(FRESH_CUTOFF)
+              return allMdx.nodes
+                // Curated items age out after the window; originals never expire.
+                .filter(
+                  (node) =>
+                    node.frontmatter.type === 'original' ||
+                    new Date(node.frontmatter.date) >= cutoff
+                )
+                .map((node) => {
+                  const url = `${site.siteMetadata.siteUrl}/articles/${node.fields.slug}`
+                  return {
+                    title: node.frontmatter.title,
+                    description: node.frontmatter.value,
+                    date: node.frontmatter.date,
+                    url,
+                    guid: url,
+                  }
+                })
+            },
+            query: `
+              {
+                allMdx(
+                  sort: { frontmatter: { date: DESC } }
+                  filter: { frontmatter: { draft: { ne: true } } }
+                ) {
+                  nodes {
+                    fields { slug }
+                    frontmatter {
+                      title
+                      value
+                      date
+                      type
+                    }
+                  }
+                }
+              }
+            `,
+            output: `/rss.xml`,
+            title: `Babels — Detection Engineering Articles`,
+            site_url: `https://babels.dev`,
+            feed_url: `https://babels.dev/rss.xml`,
+          },
+        ],
+      },
+    },
   ],
 }

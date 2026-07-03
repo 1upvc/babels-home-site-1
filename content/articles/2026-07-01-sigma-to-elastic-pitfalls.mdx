@@ -1,0 +1,19 @@
+---
+title: "Three Pitfalls When Converting SIGMA Rules to Elastic"
+slug: sigma-to-elastic-pitfalls
+date: 2026-07-01
+type: curated
+sourceUrl: https://example.com/sigma-elastic-pitfalls
+sourceName: "Alex Rivera — Blue Team Notes"
+tags: [sigma, elastic, detection-engineering]
+keywords: [field-mapping, ecs, backend, log-source, tuning]
+value: "Most broken SIGMA-to-Elastic conversions come down to three fixable causes: mismatched field mappings, ignored log-source scoping, and skipping post-conversion tuning against real data."
+---
+
+A practical field guide to why a "converted" SIGMA rule so often fires on
+nothing — or everything. The author walks through field-mapping drift against
+ECS, the log-source conditions people silently drop during conversion, and the
+tuning pass that has to happen against your own data before a rule is trustworthy.
+
+Most valuable takeaway: conversion is the first 20% of the work; budget the other
+80% for mapping verification and tuning against production telemetry.

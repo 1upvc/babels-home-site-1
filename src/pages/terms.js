@@ -9,7 +9,7 @@ const SecondPage = () => (
     <Link to="/">Return to homepage</Link>
     <p>Date of Last Update: June 1, 2026</p>
     <h2>Introduction</h2>
-    <p>These terms of use (these “Terms”) cover your use of and access to https://cairnz.com and its associated domains (the “Website”). These Terms form part of a binding contract between you and Babels d.b.a. Arjun G. Raman (“we,” “us,” “our,” or “Babels”). By using or accessing the Website, you are agreeing to both these Terms and our Privacy Policy (collectively, this “Agreement”). If you use or access the Website in your capacity as a representative or employee of an organization, you agree to this Agreement on that organization’s behalf and you represent and warrant that you have the authority do so. References to “you,” “your” or similar terms in this Agreement refer to the individual or organization agreeing to this Agreement.
+    <p>These terms of use (these “Terms”) cover your use of and access to https://babels.dev and its associated domains (the “Website”). These Terms form part of a binding contract between you and Babels d.b.a. Arjun G. Raman (“we,” “us,” “our,” or “Babels”). By using or accessing the Website, you are agreeing to both these Terms and our Privacy Policy (collectively, this “Agreement”). If you use or access the Website in your capacity as a representative or employee of an organization, you agree to this Agreement on that organization’s behalf and you represent and warrant that you have the authority do so. References to “you,” “your” or similar terms in this Agreement refer to the individual or organization agreeing to this Agreement.
     PLEASE READ THIS AGREEMENT CAREFULLY. IT INCLUDES IMPORTANT INFORMATION ABOUT YOUR LEGAL RIGHTS AND OBLIGATIONS. IF YOU DO NOT ACCEPT THIS AGREEMENT, WE DO NOT GRANT YOU ANY LICENSE OR USE RIGHTS HEREUNDER, AND YOU MAY NOT USE OR ACCESS THE WEBSITE.</p>
     <h2>Eligibility Requirements</h2>
     <h3>Minimum Age</h3>
@@ -74,7 +74,7 @@ const SecondPage = () => (
     <p>
     If we conclude, at our sole discretion, that you have misused the Website, we may take action against you. We do our best to ensure fair outcomes, but in all cases, we reserve the right to remove any content or prohibit your use of the Website without liability or notice to you, at any time and for any reason (except where prohibited by applicable law).
 
-    You may report violations of these guidelines directly to Arjun G. Raman by emailing https://cairnz.com.
+    You may report violations of these guidelines directly to Arjun G. Raman by emailing https://babels.dev.
     </p>
 
     <h2>Third Party Services, Sites, and Content</h2>
@@ -119,7 +119,7 @@ const SecondPage = () => (
 
     Other than legitimate business purposes related to your role as a potential or current customer, you must not access or use for any commercial purposes any part of the Website or any services or materials available through the Website.
 
-    If you wish to make any use of material on the Website other than that set out in this section, please address your request to: https://cairnz.com.
+    If you wish to make any use of material on the Website other than that set out in this section, please address your request to: https://babels.dev.
 
     If you print, copy, modify, download, or otherwise use or provide any other person with access to any part of the Website in breach of these Terms, your right to use the Website will stop immediately and you must, at our option, return or destroy any copies of the materials you have made. No right, title, or interest in or to the Website or any content on the Website is transferred to you, and all rights not expressly granted are reserved by Arjun G. Raman. Any use of the Website not expressly permitted by these Terms is a breach of these Terms and may violate copyright, trademark, and other laws.
     </p>
@@ -221,7 +221,7 @@ const SecondPage = () => (
     <p>
     We may provide any notice to you under these Terms by: (1) sending a message to the email address you provide or (2) by posting to the Website. Notices sent by email will be effective when we send the email and notices we provide by posting will be effective upon posting. It is your responsibility to keep your email address current.
 
-    To give us notice under these Terms, you must contact us as follows: (i) by writing to https://cairnz.com; or (ii) by personal delivery, overnight courier, or registered or certified mail to:
+    To give us notice under these Terms, you must contact us as follows: (i) by writing to https://babels.dev; or (ii) by personal delivery, overnight courier, or registered or certified mail to:
     Attn: Legal Department
     Arjun G. Raman
     6007 Sun Vista Dr.

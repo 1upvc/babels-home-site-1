@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'gatsby'
 import { StaticImage } from "gatsby-plugin-image"
 import { RiTwitterFill } from "@react-icons/all-files/ri/RiTwitterFill"
 import { RiGithubFill } from "@react-icons/all-files/ri/RiGithubFill"
 import { RiYoutubeFill } from "@react-icons/all-files/ri/RiYoutubeFill"
+import Subscribe from './Subscribe'
 
 const Main = (props) => {
   const close = <div className="close" onClick={() => {props.onCloseArticle()}}></div>
@@ -25,7 +27,7 @@ const Main = (props) => {
             <ul>
               <li><strong>Tooling</strong> — open-source detection engineering solutions of all types.</li>
               <li><strong>AI Integration</strong> — LLM-powered workflows for analysts and engineers who want to convert, validate, and deploy rules conversationally, either locally or through an agent via MCP.</li>
-              <li><strong>Insight</strong> — curated news and thought pieces on detection engineering, at a frequency of your choosing. Coming soon via Articles.</li>
+              <li><strong>Insight</strong> — curated news and thought pieces on detection engineering, at a frequency of your choosing. Available now via Articles.</li>
             </ul>
           </p>
           {close}
@@ -87,7 +89,11 @@ const Main = (props) => {
         <article id="about" className={`${props.article === 'about' ? 'active' : ''} ${props.articleTimeout ? 'timeout' : ''}`} style={{display:'none'}}>
           <h2 className="major">Articles</h2>
           <p>
-            Coming Soon. We are planning to curate and create insight thought pieces and news on detection engineering. It'll be easy. One click to Subscribe.
+            Curated news and original thought pieces on detection engineering — short summaries that grab the key words and value statement from each author. Delivered at a frequency of your choosing.
+          </p>
+          <Subscribe heading={null} />
+          <p>
+            <Link to="/articles">Browse all articles &rarr;</Link>
           </p>
           {close}
         </article>
