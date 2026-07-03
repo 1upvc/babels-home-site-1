@@ -1,0 +1,5 @@
+# Ad-hoc article URLs to curate (one per line).
+# Lines starting with # and blank lines are ignored.
+# Use this for one-off pieces or sites that don't publish an RSS feed.
+# Example:
+# https://example.com/some-great-detection-engineering-post
