@@ -1,0 +1,15 @@
+---
+title: "From Bing Search to Ransomware: Bumblebee and AdaptixC2 Deliver Akira"
+slug: from-bing-search-to-ransomware-bumblebee-and-adaptixc2
+date: 2026-06-29
+type: curated
+draft: false
+sourceUrl: https://thedfirreport.com/2026/06/29/from-bing-search-to-ransomware-bumblebee-and-adaptixc2-deliver-akira-3/
+sourceName: "The DFIR Report"
+tags: [detection-engineering, incident-response]
+keywords: [bumblebee, akira, dll sideloading, seo poisoning, credential harvesting]
+value: "This case highlights a multi-stage campaign from initial SEO lure to credential theft and ransomware deployment — useful for building detections across the full kill chain (sideloading, persistence, lateral movement)."
+relevance: 4
+---
+
+A user downloaded a trojanized MSI from an SEO-poisoned site, which used DLL sideloading to establish C2 and persistence through new admin accounts. The threat actor then moved laterally with RDP/SSH tunneling, harvested credentials via wbadmin and custom scripts, exfiltrated over 75GB of data, and deployed Akira ransomware.
