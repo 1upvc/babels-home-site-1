@@ -1,0 +1,136 @@
+/* Articles */
+
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	.article-back {
+		font-size: 0.8rem;
+		letter-spacing: _font(letter-spacing);
+		text-transform: uppercase;
+	}
+
+	// Subscribe block (Buttondown embed).
+	.subscribe {
+		border: solid _size(border-width) _palette(border-bg-alt);
+		border-radius: _size(border-radius);
+		padding: 1.5em;
+		margin-bottom: _size(element-margin);
+
+		h3 {
+			margin-bottom: 0.5em;
+		}
+
+		.subscribe-form {
+			.field {
+				margin-bottom: 1em;
+			}
+
+			.actions {
+				margin: 0;
+			}
+		}
+	}
+
+	// Index page.
+	.articles-page {
+		.articles-intro {
+			color: _palette(fg-light);
+		}
+	}
+
+	.article-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.article-card {
+		border-top: solid _size(border-width) _palette(border-bg-alt);
+		padding: 1.5em 0;
+
+		h2 {
+			font-size: 1.35rem;
+			margin: 0.25em 0 0.35em 0;
+		}
+
+		.article-card-meta {
+			display: flex;
+			align-items: center;
+			gap: 0.75em;
+			font-size: 0.75rem;
+			letter-spacing: _font(letter-spacing);
+			text-transform: uppercase;
+			color: _palette(fg-light);
+		}
+
+		.article-card-source {
+			color: _palette(fg-light);
+			font-style: italic;
+			margin-bottom: 0.5em;
+		}
+
+		.article-card-value {
+			margin-bottom: 0.75em;
+		}
+
+		.article-card-links {
+			font-size: 0.85rem;
+			margin-bottom: 0;
+		}
+	}
+
+	.badge {
+		display: inline-block;
+		padding: 0.15em 0.6em;
+		border-radius: _size(border-radius);
+		border: solid _size(border-width) _palette(border-bg-alt);
+		font-weight: _font(weight-bold);
+		letter-spacing: _font(letter-spacing);
+	}
+
+	// Article page.
+	.article {
+		.article-meta {
+			font-size: 0.75rem;
+			letter-spacing: _font(letter-spacing);
+			text-transform: uppercase;
+			color: _palette(fg-light);
+			margin-bottom: 1em;
+		}
+
+		.article-value {
+			font-size: 1.1rem;
+		}
+
+		.article-body {
+			margin: 1.5em 0;
+		}
+
+		.article-source a {
+			font-weight: _font(weight-bold);
+		}
+	}
+
+	.article-tags {
+		list-style: none;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5em;
+		padding: 0;
+		margin: 0 0 1em 0;
+
+		li {
+			font-size: 0.75rem;
+			color: _palette(fg-light);
+			padding: 0;
+		}
+	}
