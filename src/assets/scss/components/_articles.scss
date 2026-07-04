@@ -38,6 +38,16 @@
 				margin: 0;
 			}
 		}
+
+		.subscribe-success {
+			margin-bottom: 0.5em;
+		}
+
+		.subscribe-error {
+			margin: 0.75em 0 0 0;
+			font-size: 0.85rem;
+			color: _palette(fg-light);
+		}
 	}
 
 	// Index page.
