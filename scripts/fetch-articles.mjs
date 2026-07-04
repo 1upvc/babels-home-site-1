@@ -123,15 +123,28 @@ function saveState(set) {
   fs.writeFileSync(STATE_FILE, JSON.stringify([...set], null, 2) + '\n')
 }
 
+// Only http(s) URLs are ingested/published. Rejects javascript:, data:, etc.
+// so an untrusted feed can't smuggle a script-scheme URL into a page's href
+// or the fetch path.
+function isHttpUrl(u) {
+  try {
+    const { protocol } = new URL(u)
+    return protocol === 'http:' || protocol === 'https:'
+  } catch {
+    return false
+  }
+}
+
 // Collect sourceUrls already present in content/articles for dedupe.
+// Tolerates both quoted (current writer) and unquoted (legacy) frontmatter.
 function existingSourceUrls() {
   const urls = new Set()
   if (!fs.existsSync(ARTICLES_DIR)) return urls
   for (const f of fs.readdirSync(ARTICLES_DIR)) {
     if (!f.endsWith('.mdx')) continue
     const text = fs.readFileSync(path.join(ARTICLES_DIR, f), 'utf8')
-    const m = text.match(/^sourceUrl:\s*(\S+)\s*$/m)
-    if (m) urls.add(m[1].trim())
+    const m = text.match(/^sourceUrl:\s*(.+?)\s*$/m)
+    if (m) urls.add(m[1].trim().replace(/^["']|["']$/g, ''))
   }
   return urls
 }
@@ -327,7 +340,7 @@ function buildMdx({ title, slug, date, sourceUrl, sourceName, tags, keywords, va
     `date: ${date}`,
     'type: curated',
     'draft: true',
-    `sourceUrl: ${sourceUrl}`,
+    `sourceUrl: ${JSON.stringify(sourceUrl)}`,
     `sourceName: ${JSON.stringify(sourceName)}`,
     `tags: ${yamlList(tags)}`,
     `keywords: ${yamlList(keywords)}`,
@@ -423,6 +436,11 @@ async function main() {
 
     const key = item.guid || item.link
     if (!item.link || !key) { stats.skipped++; continue }
+    if (!isHttpUrl(item.link)) {
+      console.warn(`SKIP  (non-http URL) — ${item.link}`)
+      stats.skipped++
+      continue
+    }
     if (processed.has(key) || seenUrls.has(item.link)) { stats.skipped++; continue }
     if (item.isoDate && new Date(item.isoDate) < ageCutoff) {
       stats.skipped++
