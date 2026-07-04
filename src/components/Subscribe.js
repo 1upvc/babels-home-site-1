@@ -5,7 +5,10 @@ import { Link } from 'gatsby'
 // Buttondown username — change this to your Buttondown handle.
 // Dashboard → Settings → the "username" in your embeddable form URL.
 const BUTTONDOWN_USERNAME = 'babels'
-const ACTION_URL = `https://buttondown.email/api/emails/embed-subscribe/${BUTTONDOWN_USERNAME}`
+// Use the canonical buttondown.com host directly: buttondown.email 302-redirects
+// to buttondown.com, and a cross-host redirect trips the CSP connect-src (so the
+// fetch would reject and show a false error even though the subscribe succeeds).
+const ACTION_URL = `https://buttondown.com/api/emails/embed-subscribe/${BUTTONDOWN_USERNAME}`
 
 const Subscribe = ({ heading, blurb }) => {
   // idle | submitting | success | error
