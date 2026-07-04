@@ -17,7 +17,11 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    cache-control = "public, max-age=2592000"
+    # No blanket cache-control here on purpose: a wildcard max-age would fight
+    # gatsby-plugin-netlify's per-asset `immutable` headers for fingerprinted
+    # JS/CSS. With no rule, HTML/page-data fall to Netlify's revalidating
+    # default (so new routes/content are never held stale), while hashed assets
+    # keep their long immutable cache. The prior 30-day /* rule was the bug.
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Robots-Tag = "index"
     X-Content-Type-Options = "nosniff"
