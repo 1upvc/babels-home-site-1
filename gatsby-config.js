@@ -85,7 +85,10 @@ module.exports = {
       },
     },
     'gatsby-plugin-sass',
-    'gatsby-plugin-offline',
+    // Ships a self-unregistering service worker so browsers that cached an
+    // earlier `gatsby-plugin-offline` SW actively uninstall it (otherwise the
+    // stale app shell keeps intercepting navigation to newer routes).
+    'gatsby-plugin-remove-serviceworker',
     `gatsby-plugin-sitemap`,
     {
       resolve: `gatsby-plugin-feed`,
