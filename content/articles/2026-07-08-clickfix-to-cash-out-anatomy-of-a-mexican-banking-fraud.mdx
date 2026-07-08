@@ -1,0 +1,15 @@
+---
+title: "ClickFix to Cash-Out: Anatomy of a Mexican Banking-Fraud Toolkit"
+slug: clickfix-to-cash-out-anatomy-of-a-mexican-banking-fraud
+date: 2026-07-08
+type: curated
+draft: false
+sourceUrl: "https://www.elastic.co/security-labs/mexican-banking-fraud-scmbanker-ref6045"
+sourceName: "Elastic Security Labs"
+tags: [detection-engineering, threat-hunting]
+keywords: [clickfix, smbanker, banking fraud, powershell toolkit, uac fatigue, clipboard manipulation]
+value: "Detect the initial infection chain with `cmd /c curl ... | cmd.exe` and later stages like `ClipCursor`, UAC loops, or kiosk mode browser launches."
+relevance: 4
+---
+
+Threat actors use a fake verification page that copies a malicious command to the clipboard, which then runs a multi-stage batch loader under the guise of a Windows update. Once elevated via UAC fatigue and mouse locking, it installs SCMBANKER — a PowerShell toolkit for real-time banking fraud operations including session monitoring and remote access.
