@@ -1,0 +1,15 @@
+---
+title: "The ‘Ghost’ in the Database: Recovering Active ADFS Signing Keys via Machine DPAPI"
+slug: the-ghost-in-the-database-recovering-active-adfs-signing
+date: 2026-07-07
+type: curated
+draft: false
+sourceUrl: "https://cloud.google.com/blog/topics/threat-intelligence/recovering-active-adfs-signing-keys-machine-dpapi/"
+sourceName: "Google Cloud — Threat Intelligence"
+tags: [detection-engineering, threat-hunting, siem]
+keywords: [golden saml, adfs, dpapi, certificate rollover, configuration drift]
+value: "Monitor Event ID 385 to detect configuration drift and enforce automated certificate management for safer key lifecycle handling."
+relevance: 4
+---
+
+Manual certificate rotation with disabled automatic rollover can leave stale records in the WID database while valid keys persist in Machine DPAPI. This drift creates a 'ghost' entry that hides the true signing key from common extraction paths but remains exploitable by privileged actors.
