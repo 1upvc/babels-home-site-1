@@ -38,7 +38,9 @@ const Subscribe = ({ heading, blurb }) => {
       <div className="subscribe" aria-live="polite">
         {heading && <h3>{heading}</h3>}
         <p className="subscribe-success">
-          Thanks for subscribing! Check your inbox to confirm — then keep reading.
+          Thanks for subscribing! The article service is targeted to release its
+          first newsletter in Fall 2026. In the meantime, browse the articles by
+          clicking below.
         </p>
         <p>
           <Link to="/articles">Browse articles &rarr;</Link>
